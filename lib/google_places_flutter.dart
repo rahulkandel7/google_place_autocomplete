@@ -13,7 +13,7 @@ class GooglePlaceAutoCompleteTextField extends StatefulWidget {
   ItemClick? itemClick;
   GetPlaceDetailswWithLatLng? getPlaceDetailWithLatLng;
   bool isLatLngRequired = true;
-
+  bool readonly;
   TextStyle textStyle;
   String googleAPIKey;
   int debounceTime = 600;
@@ -56,6 +56,7 @@ class GooglePlaceAutoCompleteTextField extends StatefulWidget {
     this.boxDecoration,
     this.isCrossBtnShown = true,
     this.seperatedBuilder,
+    this.readonly = false,
     this.showError = true,
     this.containerHorizontalPadding,
     this.containerVerticalPadding,
@@ -115,6 +116,7 @@ class _GooglePlaceAutoCompleteTextFieldState
           children: [
             Expanded(
               child: TextFormField(
+                readOnly: widget.readonly,
                 decoration: widget.inputDecoration,
                 style: widget.textStyle,
                 controller: widget.textEditingController,
@@ -139,10 +141,15 @@ class _GooglePlaceAutoCompleteTextFieldState
                 },
               ),
             ),
-            (!widget.isCrossBtnShown)
-                ? SizedBox()
-                : isCrossBtn && _showCrossIconWidget()
-                ? IconButton(onPressed: clearData, icon: Icon(Icons.close))
+            !widget.readonly
+                ? (!widget.isCrossBtnShown)
+                      ? SizedBox()
+                      : isCrossBtn && _showCrossIconWidget()
+                      ? IconButton(
+                          onPressed: clearData,
+                          icon: Icon(Icons.close),
+                        )
+                      : SizedBox()
                 : SizedBox(),
           ],
         ),
