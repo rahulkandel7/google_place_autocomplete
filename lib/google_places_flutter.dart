@@ -116,6 +116,7 @@ class _GooglePlaceAutoCompleteTextFieldState
           children: [
             Expanded(
               child: TextFormField(
+                onTapOutside: (event) => FocusScope.of(context).unfocus(),
                 readOnly: widget.readonly,
                 decoration: widget.inputDecoration,
                 style: widget.textStyle,
